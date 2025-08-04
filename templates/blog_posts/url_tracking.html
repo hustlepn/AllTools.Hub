@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="blog-post">
+    <h1>Tracking Clicks with Shortened URLs</h1>
+    <p class="date">February 25, 2023</p>
+
+    <div class="help-article">
+        <h2>How It Works</h2>
+        <p>Our <a href="/tools/shortener">URL Shortener</a> provides basic analytics:</p>
+        <ul>
+            <li>Total clicks</li>
+            <li>Country data</li>
+            <li>Referral sources</li>
+        </ul>
+
+        <h2>Setup Guide</h2>
+        <div class="step">
+            <h3>Step 1: Enter Long URL</h3>
+            <p>Paste any web address (must include <code>https://</code>).</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Customize (Optional)</h3>
+            <p>Create a memorable slug like <code>allth.ub/mytool</code></p>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Share & Track</h3>
+            <p>Use the dashboard to monitor clicks in real-time.</p>
+        </div>
+    </div>
+</article>
+{% endblock %}
