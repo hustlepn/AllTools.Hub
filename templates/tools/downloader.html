@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="tool-header">
+        <h1>Video Downloader</h1>
+        <p>Download videos from YouTube, Instagram, Facebook and more!</p>
+    </section>
+
+    <section class="video-downloader">
+        <div class="video-input">
+            <input type="url" id="video-url" placeholder="Paste video link here..." class="video-textbox">
+            <button id="fetch-btn" class="btn">Fetch Video</button>
+        </div>
+
+        <div class="video-options" id="options-box" style="display:none">
+            <h3>Available Formats:</h3>
+            <div class="format-options">
+                <button class="format-btn">MP4 (HD)</button>
+                <button class="format-btn">MP4 (SD)</button>
+                <button class="format-btn">MP3 (Audio)</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>Video Downloader Guide</h3>
+            <p>January 15, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>Understanding Video Formats</h3>
+            <p>February 18, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>Social Media Video Tips</h3>
+            <p>March 10, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+
+    <script>
+        document.getElementById('fetch-btn').addEventListener('click', function() {
+            const videoUrl = document.getElementById('video-url').value.trim();
+            if (videoUrl) {
+                document.getElementById('options-box').style.display = 'block';
+            }
+        });
+    </script>
+{% endblock %}
