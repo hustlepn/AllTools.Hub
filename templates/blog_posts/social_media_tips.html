@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="blog-post">
+    <h1>Optimizing Videos for Social Media</h1>
+    <p class="date">March 10, 2023</p>
+
+    <div class="help-article">
+        <h2>Platform Specifications</h2>
+        <table>
+            <tr><th>Platform</th><th>Format</th><th>Max Length</th></tr>
+            <tr><td>Instagram</td><td>MP4</td><td>60s (Stories)</td></tr>
+            <tr><td>TikTok</td><td>MP4</td><td>10m</td></tr>
+        </table>
+
+        <h2>Workflow</h2>
+        <div class="step">
+            <h3>Step 1: Download Source</h3>
+            <p>Use our <a href="/tools/downloader">Video Downloader</a> to get the original file.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Trim & Resize</h3>
+            <p>Adjust dimensions to:
+            <ul>
+                <li>1080x1920 (Stories/Reels)</li>
+                <li>1280x720 (YouTube Shorts)</li>
+            </ul>
+        </div>
+    </div>
+</article>
+{% endblock %}
