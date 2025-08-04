@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="tool-header">
+        <h1>URL Shortener</h1>
+        <p>Make long URLs short and easy to share!</p>
+    </section>
+
+    <section class="url-shortener">
+        <div class="url-input">
+            <input type="url" id="long-url" placeholder="Paste your long URL here..." class="url-textbox">
+            <button id="shorten-btn" class="btn">Shorten URL</button>
+        </div>
+
+        <div class="url-result" id="result-box" style="display:none">
+            <input type="text" id="short-url" readonly class="url-textbox">
+            <button id="copy-btn" class="btn">Copy</button>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>URL Safety Tips</h3>
+            <p>January 21, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>How URL Shorteners Track Clicks</h3>
+            <p>February 25, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>Creative Uses for QR Codes</h3>
+            <p>February 5, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+
+    <script>
+        document.getElementById('shorten-btn').addEventListener('click', function() {
+            const longUrl = document.getElementById('long-url').value.trim();
+            if (longUrl) {
+                // Simulate URL shortening (real app would call a backend API)
+                const shortUrl = "https://allth.ub/" + Math.random().toString(36).substring(2, 8);
+                document.getElementById('short-url').value = shortUrl;
+                document.getElementById('result-box').style.display = 'block';
+            }
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const shortUrl = document.getElementById('short-url');
+            shortUrl.select();
+            document.execCommand('copy');
+            alert("Copied to clipboard!");
+        });
+    </script>
+{% endblock %}
