@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllToolsHub - Your All-in-One Tool Hub</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/static/favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AllToolsHub{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/static/favicon.png">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="/">AllToolsHub</a></h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/blog">Blog</a>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <div class="container">
+      <h1><a href="/">AllToolsHub</a></h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="/about">About Us</a>
-                <a href="/privacy">Privacy Policy</a>
-                <a href="/terms">Terms of Service</a>
-            </div>
-            <p>© 2023 AllToolsHub | Made with ❤️ for you</p>
-        </div>
-    </footer>
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+      <p>© 2023 AllToolsHub | Made with ❤️ for you</p>
+    </div>
+  </footer>
 
-    <script src="/static/js/main.js"></script>
+  <script src="/static/js/main.js"></script>
 </body>
 </html>
