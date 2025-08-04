@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="blog-post">
+    <h1>Making PDFs Accessible for Screen Readers</h1>
+    <p class="date">March 3, 2023</p>
+
+    <div class="help-article">
+        <h2>WCAG Requirements</h2>
+        <p>Your PDFs should include:</p>
+        <ul>
+            <li>Alt text for images</li>
+            <li>Logical reading order</li>
+            <li>Proper heading structure</li>
+        </ul>
+
+        <h2>Implementation Steps</h2>
+        <div class="step">
+            <h3>Step 1: Tag Elements</h3>
+            <p>Use our <a href="/tools/pdf_tools">Tagging Tool</a> to label:
+            <ul>
+                <li>Headings (H1-H6)</li>
+                <li>Lists</li>
+                <li>Tables</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Verify Accessibility</h3>
+            <p>Run the built-in checker and fix reported issues.</p>
+        </div>
+    </div>
+</article>
+{% endblock %}
