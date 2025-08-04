@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="tool-header">
+        <h1>Loan Calculator</h1>
+        <p>Calculate your loan payments and interest</p>
+    </section>
+
+    <section class="loan-calculator">
+        <div class="calculator-form">
+            <div class="input-group">
+                <label>Loan Amount ($)</label>
+                <input type="number" id="amount" class="calc-input">
+            </div>
+            <div class="input-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="rate" class="calc-input">
+            </div>
+            <div class="input-group">
+                <label>Loan Term (months)</label>
+                <input type="number" id="term" class="calc-input">
+            </div>
+            <button id="calculate-btn" class="btn">Calculate</button>
+        </div>
+
+        <div class="calculator-result" id="result-box" style="display:none">
+            <h3>Monthly Payment: <span id="monthly-payment">$0</span></h3>
+            <h3>Total Interest: <span id="total-interest">$0</span></h3>
+            <h3>Total Cost: <span id="total-cost">$0</span></h3>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>Smart Loan Management Tips</h3>
+            <p>January 28, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>PDF Security Guide</h3>
+            <p>January 22, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>URL Safety Tips</h3>
+            <p>January 21, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+
+    <script>
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const rate = parseFloat(document.getElementById('rate').value) / 100 / 12;
+            const term = parseInt(document.getElementById('term').value);
+
+            const monthlyPayment = (amount * rate) / (1 - Math.pow(1 + rate, -term));
+            const totalCost = monthlyPayment * term;
+            const totalInterest = totalCost - amount;
+
+            document.getElementById('monthly-payment').textContent = '$' + monthlyPayment.toFixed(2);
+            document.getElementById('total-interest').textContent = '$' + totalInterest.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + totalCost.toFixed(2);
+            document.getElementById('result-box').style.display = 'block';
+        });
+    </script>
+{% endblock %}
