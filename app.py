@@ -94,5 +94,9 @@ def social_media_tips():
 def google_verification():
     return send_from_directory('static', 'google-site-verification.html')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('.', 'sitemap.xml')
+
 if __name__ == '__main__':
     app.run(debug=True)
