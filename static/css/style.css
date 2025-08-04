@@ -1,5 +1,5 @@
-/* COMPLETE UPDATED style.css - ALL FEATURES INCLUDED */
-/* ================================================= */
+/* COMPLETE ALLTOOLSHUB CSS - EVERY PAGE STYLED */
+/* =========================================== */
 
 /* Base Styles */
 :root {
@@ -92,7 +92,7 @@ header nav a:hover {
   margin: 0 auto;
 }
 
-/* Tools Grid */
+/* Tools Grid (Homepage) */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -128,6 +128,7 @@ header nav a:hover {
   margin-bottom: 20px;
 }
 
+/* Buttons */
 .btn {
   display: inline-block;
   background-color: var(--primary-color);
@@ -231,7 +232,7 @@ header nav a:hover {
   margin: 0;
 }
 
-/* PDF Tools Page */
+/* Tool Header (All Tool Pages) */
 .tool-header {
   text-align: center;
   padding: 40px 0 30px;
@@ -248,6 +249,7 @@ header nav a:hover {
   margin-bottom: 20px;
 }
 
+/* PDF Tools Page */
 .tool-options {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -310,6 +312,109 @@ header nav a:hover {
   display: inline-block;
 }
 
+/* URL Shortener Page */
+.url-shortener {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.url-input, .url-result {
+  margin-bottom: 30px;
+}
+
+.url-textbox {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+/* Video Downloader Page */
+.video-downloader {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.video-textbox {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.format-options {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.format-btn {
+  background: var(--white);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.format-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Loan Calculator Page */
+.loan-calculator {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.calculator-form {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.calc-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.calculator-result {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-top: 20px;
+}
+
+.calculator-result h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+}
+
 /* Footer */
 footer {
   background-color: var(--white);
@@ -342,14 +447,15 @@ footer p {
   color: #666;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
   header .container {
     flex-direction: column;
     gap: 15px;
   }
 
-  .tools-grid, .tool-options {
+  .tools-grid, 
+  .tool-options {
     grid-template-columns: 1fr;
   }
 
@@ -367,7 +473,14 @@ footer p {
     width: 95%;
   }
   
-  .tool-card, .blog-card, .blog-post, .option-card {
+  .tool-card, 
+  .blog-card, 
+  .blog-post, 
+  .option-card {
     padding: 20px;
+  }
+
+  .format-options {
+    flex-direction: column;
   }
 }
