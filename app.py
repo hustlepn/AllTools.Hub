@@ -90,5 +90,9 @@ def pdf_accessibility():
 def social_media_tips():
     return render_template('blog_posts/social_media_tips.html')
 
+@app.route('/google-site-verification.html')
+def google_verification():
+    return send_from_directory('static', 'google-site-verification.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
