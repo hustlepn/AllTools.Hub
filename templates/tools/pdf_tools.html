@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="tool-header">
+        <h1>PDF Tools</h1>
+        <p>Merge, split, convert PDFs and more!</p>
+        <a href="#tool-actions" class="btn">Use Tool</a>
+    </section>
+
+    <section id="tool-actions" class="tool-options">
+        <div class="option-card">
+            <h3>Merge PDFs</h3>
+            <p>Combine multiple PDF files into one document</p>
+            <button class="btn">Select Files</button>
+        </div>
+
+        <div class="option-card">
+            <h3>Split PDF</h3>
+            <p>Extract specific pages or split by sections</p>
+            <button class="btn">Select File</button>
+        </div>
+
+        <div class="option-card">
+            <h3>Convert to PDF</h3>
+            <p>Convert Word, Excel or images to PDF</p>
+            <button class="btn">Select Files</button>
+        </div>
+
+        <div class="option-card">
+            <h3>Compress PDF</h3>
+            <p>Reduce PDF file size while keeping quality</p>
+            <button class="btn">Select File</button>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>PDF Security Guide</h3>
+            <p>January 22, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>PDF Merging Made Easy</h3>
+            <p>February 12, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>Making PDFs Accessible</h3>
+            <p>March 3, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+{% endblock %}
