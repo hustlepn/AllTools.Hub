@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="hero">
+        <h2>Your All-in-One Free Toolbox</h2>
+        <p>Simple, fast, and free tools for your everyday needs</p>
+    </section>
+
+    <section class="tools-grid">
+        <div class="tool-card">
+            <div class="tool-icon">🎥</div>
+            <h3>Video Downloader</h3>
+            <p>Download videos from YouTube, Instagram, Facebook and more!</p>
+            <a href="/tools/downloader" class="btn">Use Tool</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">🔗</div>
+            <h3>URL Shortener</h3>
+            <p>Make long URLs short and easy to share!</p>
+            <a href="/tools/shortener" class="btn">Use Tool</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">🧮</div>
+            <h3>Calculators</h3>
+            <p>Loan, EMI, Interest and other useful calculators!</p>
+            <a href="/tools/calculator" class="btn">Use Tool</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">📄</div>
+            <h3>PDF Tools</h3>
+            <p>Merge, split, convert PDFs and more!</p>
+            <a href="/tools/pdf_tools" class="btn">Use Tool</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">🔲</div>
+            <h3>QR Generator</h3>
+            <p>Create QR codes for any website or text!</p>
+            <a href="/tools/qr" class="btn">Use Tool</a>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>Video Downloader Guide</h3>
+            <p>January 15, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>URL Safety Tips</h3>
+            <p>January 21, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>PDF Security Guide</h3>
+            <p>January 22, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+{% endblock %}
