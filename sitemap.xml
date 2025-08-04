@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://alltoolshub.up.railway.app/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <!-- Tools -->
+  <url>
+    <loc>https://yourdomain.com/tools/pdf_tools</loc>
+  </url>
+  <!-- Add all other URLs -->
+</urlset>
