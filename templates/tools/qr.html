@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="tool-header">
+        <h1>QR Code Generator</h1>
+        <p>Create QR codes for any website or text!</p>
+    </section>
+
+    <section class="qr-generator">
+        <div class="qr-input">
+            <input type="text" id="qr-text" placeholder="Enter URL or text..." class="qr-textbox">
+            <button id="generate-btn" class="btn">Generate QR Code</button>
+        </div>
+
+        <div class="qr-result">
+            <div id="qr-code"></div>
+            <button id="download-btn" class="btn" disabled>Download QR Code</button>
+        </div>
+    </section>
+
+    <section class="recent-blogs">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-card">
+            <h3>Creative Uses for QR Codes</h3>
+            <p>February 5, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>URL Safety Tips</h3>
+            <p>January 21, 2023</p>
+        </div>
+        <div class="blog-card">
+            <h3>How URL Shorteners Track Clicks</h3>
+            <p>February 25, 2023</p>
+        </div>
+        <a href="/blog" class="view-all">View All Posts</a>
+    </section>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const text = document.getElementById('qr-text').value.trim();
+            if (text) {
+                document.getElementById('qr-code').innerHTML = '';
+                new QRCode(document.getElementById('qr-code'), {
+                    text: text,
+                    width: 200,
+                    height: 200
+                });
+                document.getElementById('download-btn').disabled = false;
+            }
+        });
+
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const canvas = document.querySelector('#qr-code canvas');
+            const link = document.createElement('a');
+            link.download = 'qrcode.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+{% endblock %}
