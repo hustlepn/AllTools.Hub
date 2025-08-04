@@ -1,6 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, send_file, send_from_directory
+from pytube import YouTube
+import os
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
 app = Flask(__name__)
+
+# Create temp directory for downloads
+os.makedirs('temp_downloads', exist_ok=True)
 
 # Main Pages
 @app.route('/')
@@ -36,8 +43,35 @@ def qr():
 def shortener():
     return render_template('tools/shortener.html')
 
-@app.route('/tools/downloader')
+@app.route('/tools/downloader', methods=['GET', 'POST'])
 def downloader():
+    if request.method == 'POST':
+        try:
+            url = request.form['url']
+            yt = YouTube(
+                url,
+                use_oauth=True,
+                allow_oauth_cache=True
+            )
+            
+            stream = yt.streams.filter(
+                progressive=True,
+                file_extension='mp4'
+            ).order_by('resolution').desc().first()
+            
+            temp_path = stream.download(output_path='temp_downloads')
+            return send_file(
+                temp_path,
+                as_attachment=True,
+                download_name=f"{secure_filename(yt.title[:50])}.mp4"
+            )
+            
+        except Exception as e:
+            return render_template(
+                'tools/downloader.html',
+                error=f"Failed to download: {str(e)}"
+            )
+    
     return render_template('tools/downloader.html')
 
 @app.route('/tools/calculator')
@@ -90,6 +124,7 @@ def pdf_accessibility():
 def social_media_tips():
     return render_template('blog_posts/social_media_tips.html')
 
+# Verification Files
 @app.route('/google-site-verification.html')
 def google_verification():
     return send_from_directory('static', 'google-site-verification.html')
@@ -97,6 +132,21 @@ def google_verification():
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory('.', 'sitemap.xml')
+
+# Cleanup temporary files
+@app.after_request
+def remove_temp_files(response):
+    try:
+        for filename in os.listdir('temp_downloads'):
+            file_path = os.path.join('temp_downloads', filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+            except Exception as e:
+                app.logger.error(f"Error deleting {file_path}: {e}")
+    except Exception as e:
+        app.logger.error(f"Temp cleanup error: {e}")
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
