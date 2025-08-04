@@ -1,5 +1,5 @@
-/* COMPLETE style.css - UPDATED */
-/* =========================== */
+/* COMPLETE UPDATED style.css - ALL FEATURES INCLUDED */
+/* ================================================= */
 
 /* Base Styles */
 :root {
@@ -276,6 +276,38 @@ header nav a:hover {
 .option-card p {
   color: #666;
   margin-bottom: 20px;
+}
+
+/* QR Generator Page */
+.qr-generator {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.qr-input {
+  margin-bottom: 30px;
+}
+
+.qr-textbox {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.qr-result {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+#qr-code {
+  margin: 20px auto;
+  display: inline-block;
 }
 
 /* Footer */
