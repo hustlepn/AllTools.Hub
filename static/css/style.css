@@ -1,7 +1,4 @@
-/* COMPLETE ALLTOOLSHUB CSS - EVERY PAGE STYLED */
-/* =========================================== */
-
-/* Base Styles */
+/* ===== BASE STYLES ===== */
 :root {
   --primary-color: #4285f4;
   --secondary-color: #34a853;
@@ -31,7 +28,7 @@ body {
   padding: 0 15px;
 }
 
-/* Header */
+/* ===== HEADER ===== */
 header {
   background-color: var(--white);
   box-shadow: var(--shadow);
@@ -73,7 +70,7 @@ header nav a:hover {
   color: var(--primary-color);
 }
 
-/* Hero Section */
+/* ===== HERO SECTION ===== */
 .hero {
   text-align: center;
   padding: 60px 0 40px;
@@ -92,7 +89,7 @@ header nav a:hover {
   margin: 0 auto;
 }
 
-/* Tools Grid (Homepage) */
+/* ===== TOOLS GRID ===== */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -128,7 +125,7 @@ header nav a:hover {
   margin-bottom: 20px;
 }
 
-/* Buttons */
+/* ===== BUTTONS ===== */
 .btn {
   display: inline-block;
   background-color: var(--primary-color);
@@ -146,53 +143,12 @@ header nav a:hover {
   background-color: #3367d6;
 }
 
-/* Recent Blogs (Homepage) */
-.recent-blogs {
-  margin: 60px 0;
-}
-
-.recent-blogs h2 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.blog-card {
-  background: var(--white);
-  padding: 20px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s;
-}
-
-.blog-card:hover {
-  transform: translateY(-3px);
-}
-
-.blog-card h3 {
-  margin: 0 0 5px 0;
-}
-
-.blog-card p {
-  color: #666;
-  margin: 0;
-}
-
-.view-all {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-/* Blog Page */
+/* ===== BLOG STYLES ===== */
 .blog-list {
   margin: 40px 0;
 }
 
-.blog-post {
+.blog-post, .blog-card {
   background: var(--white);
   padding: 25px;
   margin-bottom: 25px;
@@ -201,23 +157,8 @@ header nav a:hover {
   transition: transform 0.3s;
 }
 
-.blog-post:hover {
+.blog-post:hover, .blog-card:hover {
   transform: translateY(-3px);
-}
-
-.blog-post h2 {
-  margin: 0 0 10px 0;
-  font-size: 1.5rem;
-}
-
-.blog-post h2 a {
-  color: var(--text-color);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.blog-post h2 a:hover {
-  color: var(--primary-color);
 }
 
 .post-date {
@@ -227,195 +168,21 @@ header nav a:hover {
   display: block;
 }
 
-.post-excerpt {
-  color: #555;
-  margin: 0;
+/* ===== HELP ARTICLES ===== */
+.help-article {
+  max-width: 800px;
+  margin: 0 auto;
 }
-
-/* Tool Header (All Tool Pages) */
-.tool-header {
-  text-align: center;
-  padding: 40px 0 30px;
+.step {
+  margin-bottom: 2rem;
 }
-
-.tool-header h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
-
-.tool-header p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-/* PDF Tools Page */
-.tool-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-  margin: 40px 0;
-}
-
-.option-card {
-  background: var(--white);
-  border-radius: 8px;
-  padding: 25px;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s;
-  text-align: center;
-}
-
-.option-card:hover {
-  transform: translateY(-5px);
-}
-
-.option-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.3rem;
-}
-
-.option-card p {
-  color: #666;
-  margin-bottom: 20px;
-}
-
-/* QR Generator Page */
-.qr-generator {
-  max-width: 600px;
-  margin: 40px auto;
-  text-align: center;
-}
-
-.qr-input {
-  margin-bottom: 30px;
-}
-
-.qr-textbox {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-bottom: 15px;
-}
-
-.qr-result {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-}
-
-#qr-code {
-  margin: 20px auto;
-  display: inline-block;
-}
-
-/* URL Shortener Page */
-.url-shortener {
-  max-width: 600px;
-  margin: 40px auto;
-  text-align: center;
-}
-
-.url-input, .url-result {
-  margin-bottom: 30px;
-}
-
-.url-textbox {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-bottom: 15px;
-}
-
-/* Video Downloader Page */
-.video-downloader {
-  max-width: 600px;
-  margin: 40px auto;
-  text-align: center;
-}
-
-.video-textbox {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-bottom: 15px;
-}
-
-.format-options {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.format-btn {
-  background: var(--white);
-  border: 1px solid var(--primary-color);
+.step h3 {
   color: var(--primary-color);
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 10px;
 }
 
-.format-btn:hover {
-  background: var(--primary-color);
-  color: white;
-}
-
-/* Loan Calculator Page */
-.loan-calculator {
-  max-width: 600px;
-  margin: 40px auto;
-}
-
-.calculator-form {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.calc-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.calculator-result {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  margin-top: 20px;
-}
-
-.calculator-result h3 {
-  margin: 0 0 15px 0;
-  font-size: 1.1rem;
-}
-
-/* Footer */
+/* ===== FOOTER ===== */
 footer {
   background-color: var(--white);
   padding: 30px 0;
@@ -441,46 +208,13 @@ footer {
   color: var(--primary-color);
 }
 
-footer p {
-  text-align: center;
-  margin: 0;
-  color: #666;
-}
-
-/* Responsive Design */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
   header .container {
     flex-direction: column;
     gap: 15px;
-  }
-
-  .tools-grid, 
-  .tool-options {
-    grid-template-columns: 1fr;
-  }
-
-  .hero h2 {
-    font-size: 1.8rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    width: 95%;
-  }
-  
-  .tool-card, 
-  .blog-card, 
-  .blog-post, 
-  .option-card {
-    padding: 20px;
-  }
-
-  .format-options {
-    flex-direction: column;
   }
 }
