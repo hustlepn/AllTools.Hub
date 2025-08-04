@@ -1,10 +1,14 @@
-// Runs when the page fully loads
+// Initialize tooltips and global event listeners
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('AllToolsHub initialized'); 
+  console.log('AllToolsHub initialized');
   
-  // Add site-wide JavaScript here
-  // Example: Mobile menu toggle (if added later)
-  document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
-    document.querySelector('nav').classList.toggle('open');
+  // Copy buttons functionality
+  document.querySelectorAll('[data-copy]').forEach(button => {
+    button.addEventListener('click', () => {
+      const text = button.getAttribute('data-copy');
+      navigator.clipboard.writeText(text);
+      button.textContent = 'Copied!';
+      setTimeout(() => button.textContent = 'Copy', 2000);
+    });
   });
 });
