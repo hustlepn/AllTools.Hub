@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="blog-post">
+    <h1>How to Merge PDF Files in 3 Simple Steps</h1>
+    <p class="date">February 12, 2023</p>
+
+    <div class="help-article">
+        <h2>What You'll Need</h2>
+        <ul>
+            <li>PDF files you want to combine</li>
+            <li>Our <a href="/tools/pdf_tools">PDF Tools</a></li>
+        </ul>
+
+        <h2>Step-by-Step Instructions</h2>
+        <div class="step">
+            <h3>Step 1: Upload Files</h3>
+            <p>Click "Choose Files" and select up to 20 PDFs from your device.</p>
+            <img src="/static/images/pdf-upload.png" alt="Upload interface screenshot">
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Arrange Pages</h3>
+            <p>Drag and drop files to set the merge order. Use the preview pane to verify.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Download</h3>
+            <p>Click "Merge PDFs" and save your combined file (processing takes 10-30 seconds).</p>
+        </div>
+
+        <h2>Troubleshooting</h2>
+        <p><strong>Issue:</strong> Password-protected files<br>
+        <strong>Solution:</strong> Remove passwords first using our <a href="/tools/pdf_tools">Unlock Tool</a></p>
+    </div>
+</article>
+{% endblock %}
