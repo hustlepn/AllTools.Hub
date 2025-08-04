@@ -233,3 +233,74 @@ footer {
     gap: 15px;
   }
 }
+
+/* Downloader Page Styling */
+.video-tool {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.video-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.video-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.video-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.video-button:hover {
+  background-color: #0056b3;
+}
+
+.video-result {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.format-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.format-btn {
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.format-btn:hover {
+  background-color: #1e7e34;
+}
+
+.center-title, .center-subtitle {
+  text-align: center;
+}
+
