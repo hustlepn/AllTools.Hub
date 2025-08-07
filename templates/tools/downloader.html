@@ -1,34 +1,109 @@
-{% extends "layouts/base.html" %}
+<!-- templates/tools/downloader.html -->
+{% extends 'layouts/base.html' %}
 
-{% block title %}Facebook & Instagram Video Downloader{% endblock %}
+{% block title %}Download Facebook or Instagram Video - AllLinkDownloader{% endblock %}
 
 {% block content %}
-<div class="tool-container">
-    <h1>Facebook & Instagram Video Downloader</h1>
-    <form method="POST">
-        <input type="text" name="url" placeholder="Enter Facebook or Instagram video URL" required>
-        <button type="submit">Download</button>
-    </form>
+<div class="container">
+  <h1 class="title">Facebook & Instagram Video Downloader</h1>
+  <form method="POST" class="download-form">
+    <input type="text" name="url" placeholder="Paste your video URL here" required value="{{ request.form.url if request.method == 'POST' else '' }}">
+    <button type="submit">Download</button>
+  </form>
 
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
 
-    {% if video_info %}
-        <div class="video-details">
-            <img src="{{ video_info.thumbnail }}" alt="Thumbnail" class="video-thumb">
-            <h2>{{ video_info.title }}</h2>
-            <p>Duration: {{ video_info.duration }}</p>
-        </div>
+  {% if video %}
+    <div class="video-info">
+      <img src="{{ video.thumbnail }}" alt="Thumbnail">
+      <h2>{{ video.title }}</h2>
+      <p>Duration: {{ video.duration }}</p>
+    </div>
 
-        <div class="download-links">
-            <h3>Download Options:</h3>
-            {% for format in video_info.formats %}
-                <a href="{{ format.url }}" class="download-btn" download>
-                    Download ({{ format.ext|upper }}, {{ format.quality }})
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
+    <!-- Fake Loading Popup -->
+    <div id="loading-popup" class="loading-popup">
+      <div class="popup-box">
+        <p>Generating your download links...</p>
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <!-- Real download buttons (hidden initially) -->
+    <div id="real-downloads" style="display: none;">
+      {% for format in video.formats %}
+        <a href="{{ format.url }}" class="download-btn" download>
+          Download ({{ format.ext.upper() }} - {{ format.quality }})
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- Fake download button to trigger the delay -->
+    <button id="start-download" class="fake-download-btn">Download Video</button>
+  {% endif %}
 </div>
+
+<style>
+  .loading-popup {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
+  .popup-box {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+  }
+  .loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #333;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 10px auto;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .download-btn, .fake-download-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #4caf50;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const fakeBtn = document.getElementById('start-download');
+    const popup = document.getElementById('loading-popup');
+    const realLinks = document.getElementById('real-downloads');
+
+    if (fakeBtn) {
+      fakeBtn.addEventListener('click', function () {
+        fakeBtn.style.display = 'none';
+        popup.style.display = 'block';
+
+        setTimeout(() => {
+          popup.style.display = 'none';
+          realLinks.style.display = 'block';
+        }, 6000); // 6 seconds delay
+      });
+    }
+  });
+</script>
 {% endblock %}
