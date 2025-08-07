@@ -1,25 +1,234 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="tool-header">
-  <h1 class="center-title">🎥 Social Media Video Downloader</h1>
-  <p class="center-subtitle">Download videos from YouTube, Instagram, Facebook, and more!</p>
-</section>
+<div class="video-downloader-container">
+    <section class="tool-header">
+        <h1><i class="fas fa-download"></i> Video Downloader</h1>
+        <p>Download videos from YouTube in high quality</p>
+    </section>
 
-<section class="video-tool">
-  <div class="video-box">
-    <input type="url" id="video-url" placeholder="Paste your video URL..." class="video-input" />
-    <button id="fetch-btn" class="video-button">Fetch Video</button>
-  </div>
-
-  <div class="video-result" id="options-box" style="display: none;">
-    <h3>Available Formats</h3>
-    <div class="format-list">
-      <button class="format-btn">MP4 (HD)</button>
-      <button class="format-btn">MP4 (SD)</button>
-      <button class="format-btn">MP3 (Audio)</button>
+    {% if error %}
+    <div class="download-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <div class="error-content">
+            <strong>Download Failed:</strong>
+            <p>{{ error }}</p>
+            <div class="error-solutions">
+                <p><i class="fas fa-lightbulb"></i> Try these solutions:</p>
+                <ul>
+                    <li>Verify the URL is correct</li>
+                    <li>Check if the video is publicly available</li>
+                    <li>Try a different video</li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-</section>
+    {% endif %}
 
+    <section class="download-form-container">
+        <form method="POST" id="download-form">
+            <div class="input-group">
+                <input 
+                    type="url" 
+                    name="url" 
+                    placeholder="Paste YouTube URL (e.g., https://www.youtube.com/watch?v=...)" 
+                    required
+                    pattern="^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+"
+                    class="url-input"
+                >
+                <button type="submit" class="download-btn">
+                    <i class="fas fa-cloud-download-alt"></i> Download
+                </button>
+            </div>
+            
+            <div class="quality-options">
+                <label>
+                    <input type="radio" name="quality" value="high" checked> 
+                    High Quality (1080p)
+                </label>
+                <label>
+                    <input type="radio" name="quality" value="medium"> 
+                    Medium Quality (720p)
+                </label>
+                <label>
+                    <input type="radio" name="quality" value="audio"> 
+                    Audio Only (MP3)
+                </label>
+            </div>
+        </form>
+
+        <div class="loading-indicator" id="loading-indicator">
+            <div class="spinner"></div>
+            <p>Processing your video... This may take 20-60 seconds</p>
+        </div>
+    </section>
+
+    <section class="instructions">
+        <h3><i class="fas fa-info-circle"></i> How to download:</h3>
+        <ol>
+            <li>Copy the URL from YouTube (desktop or mobile)</li>
+            <li>Paste above and select quality</li>
+            <li>Click Download and wait for processing</li>
+            <li>Your video will save automatically</li>
+        </ol>
+        
+        <div class="supported-platforms">
+            <p><strong>Supported:</strong> YouTube videos, shorts, and playlists</p>
+        </div>
+    </section>
+</div>
+
+<script>
+// Show loading indicator when form submits
+document.getElementById('download-form').addEventListener('submit', function() {
+    document.getElementById('loading-indicator').style.display = 'flex';
+});
+
+// Validate URL in real-time
+document.querySelector('.url-input').addEventListener('input', function(e) {
+    const urlPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+    if (!urlPattern.test(e.target.value)) {
+        e.target.setCustomValidity('Please enter a valid YouTube URL');
+    } else {
+        e.target.setCustomValidity('');
+    }
+});
+</script>
+
+<style>
+/* Video Downloader Specific Styles */
+.video-downloader-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tool-header h1 {
+    color: #4285f4;
+    margin-bottom: 10px;
+}
+
+.download-form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.url-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px 0 0 4px;
+    font-size: 16px;
+}
+
+.download-btn {
+    padding: 0 25px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.download-btn:hover {
+    background: #3367d6;
+}
+
+.quality-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.quality-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.loading-indicator {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.spinner {
+    border: 4px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top: 4px solid #4285f4;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.download-error {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    display: flex;
+    gap: 15px;
+}
+
+.error-content {
+    flex: 1;
+}
+
+.error-solutions {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #e57373;
+}
+
+.instructions {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.instructions ol {
+    padding-left: 20px;
+    margin: 15px 0;
+}
+
+.supported-platforms {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.fas {
+    margin-right: 8px;
+    color: #4285f4;
+}
+</style>
 {% endblock %}
