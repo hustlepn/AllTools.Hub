@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, send_file, send_from_directory
-from pytube import YouTube
-import instaloader
-import os
-import re
 from werkzeug.utils import secure_filename
+import yt_dlp
+import os
 import requests
 from datetime import datetime
 
@@ -11,9 +9,6 @@ app = Flask(__name__)
 
 # Create temp directory for downloads
 os.makedirs('temp_downloads', exist_ok=True)
-
-# Instagram loader instance
-ig_loader = instaloader.Instaloader()
 
 # Main Pages
 @app.route('/')
@@ -53,66 +48,33 @@ def shortener():
 def downloader():
     if request.method == 'POST':
         url = request.form['url']
-        
+
         try:
-            # YouTube Download
-            if 'youtube.com' in url or 'youtu.be' in url:
-                yt = YouTube(
-                    url,
-                    use_oauth=True,
-                    allow_oauth_cache=True
-                )
-                
-                stream = yt.streams.filter(
-                    progressive=True,
-                    file_extension='mp4'
-                ).order_by('resolution').desc().first()
-                
-                temp_path = stream.download(output_path='temp_downloads')
-                filename = f"{secure_filename(yt.title[:50])}.mp4"
-            
-            # Instagram Download
-            elif 'instagram.com' in url:
-                post_code = re.search(r'instagram\.com\/p\/([^\/]+)', url)
-                if not post_code:
-                    raise Exception("Invalid Instagram URL format")
-                
-                post = instaloader.Post.from_shortcode(ig_loader.context, post_code.group(1))
-                filename = f"instagram_{post.owner_username}_{post.date_utc.strftime('%Y%m%d')}.mp4"
-                
-                # Get highest quality video URL
-                video_url = post.video_url if post.is_video else None
-                if not video_url:
-                    raise Exception("No video found in this post")
-                
-                # Download video
-                response = requests.get(video_url, stream=True)
-                temp_path = os.path.join('temp_downloads', filename)
-                with open(temp_path, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        if chunk:
-                            f.write(chunk)
-            
-            # Facebook Download
-            elif 'facebook.com' in url:
-                # Note: Facebook requires cookies for private videos
-                raise Exception("Facebook downloads currently require additional setup")
-            
-            else:
-                raise Exception("Unsupported platform. Please use YouTube, Instagram, or Facebook URLs")
-            
+            ydl_opts = {
+                'quiet': True,
+                'skip_download': False,
+                'outtmpl': 'temp_downloads/%(title).50s.%(ext)s',
+                'format': 'bestvideo+bestaudio/best',
+                'merge_output_format': 'mp4',
+            }
+
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=True)
+                filename = ydl.prepare_filename(info)
+                title = info.get('title', 'video')
+                ext = info.get('ext', 'mp4')
+
+            safe_name = f"{secure_filename(title)}.{ext}"
+
             return send_file(
-                temp_path,
+                filename,
                 as_attachment=True,
-                download_name=filename
+                download_name=safe_name
             )
-            
+
         except Exception as e:
-            return render_template(
-                'tools/downloader.html',
-                error=f"Download failed: {str(e)}"
-            )
-    
+            return render_template('tools/downloader.html', error=f"Download failed: {str(e)}")
+
     return render_template('tools/downloader.html')
 
 @app.route('/tools/calculator')
