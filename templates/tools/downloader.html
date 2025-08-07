@@ -4,7 +4,7 @@
 <div class="video-downloader-container">
     <section class="tool-header">
         <h1><i class="fas fa-download"></i> Video Downloader</h1>
-        <p>Download videos from YouTube in high quality</p>
+        <p>Download videos from YouTube, Instagram, and Facebook</p>
     </section>
 
     {% if error %}
@@ -17,7 +17,7 @@
                 <p><i class="fas fa-lightbulb"></i> Try these solutions:</p>
                 <ul>
                     <li>Verify the URL is correct</li>
-                    <li>Check if the video is publicly available</li>
+                    <li>Check if the video is public</li>
                     <li>Try a different video</li>
                 </ul>
             </div>
@@ -31,67 +31,81 @@
                 <input 
                     type="url" 
                     name="url" 
-                    placeholder="Paste YouTube URL (e.g., https://www.youtube.com/watch?v=...)" 
+                    placeholder="Paste video URL (YouTube/Instagram/Facebook)" 
                     required
-                    pattern="^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+"
+                    pattern="^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|instagram\.com|facebook\.com)\/.+"
                     class="url-input"
+                    id="video-url"
                 >
                 <button type="submit" class="download-btn">
                     <i class="fas fa-cloud-download-alt"></i> Download
                 </button>
             </div>
             
-            <div class="quality-options">
-                <label>
-                    <input type="radio" name="quality" value="high" checked> 
-                    High Quality (1080p)
-                </label>
-                <label>
-                    <input type="radio" name="quality" value="medium"> 
-                    Medium Quality (720p)
-                </label>
-                <label>
-                    <input type="radio" name="quality" value="audio"> 
-                    Audio Only (MP3)
-                </label>
+            <div class="platform-options">
+                <div class="platform-icon" id="yt-icon" style="display:none">
+                    <i class="fab fa-youtube"></i> YouTube
+                </div>
+                <div class="platform-icon" id="ig-icon" style="display:none">
+                    <i class="fab fa-instagram"></i> Instagram
+                </div>
+                <div class="platform-icon" id="fb-icon" style="display:none">
+                    <i class="fab fa-facebook"></i> Facebook
+                </div>
             </div>
         </form>
 
         <div class="loading-indicator" id="loading-indicator">
             <div class="spinner"></div>
-            <p>Processing your video... This may take 20-60 seconds</p>
+            <p id="loading-text">Detecting video source...</p>
         </div>
     </section>
 
     <section class="instructions">
-        <h3><i class="fas fa-info-circle"></i> How to download:</h3>
-        <ol>
-            <li>Copy the URL from YouTube (desktop or mobile)</li>
-            <li>Paste above and select quality</li>
-            <li>Click Download and wait for processing</li>
-            <li>Your video will save automatically</li>
-        </ol>
-        
-        <div class="supported-platforms">
-            <p><strong>Supported:</strong> YouTube videos, shorts, and playlists</p>
+        <h3><i class="fas fa-info-circle"></i> Supported Platforms:</h3>
+        <div class="platform-grid">
+            <div class="platform-card">
+                <i class="fab fa-youtube"></i>
+                <h4>YouTube</h4>
+                <p>Videos, Shorts, and Playlists</p>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-instagram"></i>
+                <h4>Instagram</h4>
+                <p>Posts, Reels, and Stories</p>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-facebook"></i>
+                <h4>Facebook</h4>
+                <p>Public videos only</p>
+            </div>
         </div>
     </section>
 </div>
 
 <script>
-// Show loading indicator when form submits
-document.getElementById('download-form').addEventListener('submit', function() {
-    document.getElementById('loading-indicator').style.display = 'flex';
+// Platform detection
+document.getElementById('video-url').addEventListener('input', function(e) {
+    const url = e.target.value;
+    document.querySelectorAll('.platform-icon').forEach(el => el.style.display = 'none');
+    
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        document.getElementById('yt-icon').style.display = 'flex';
+        document.getElementById('loading-text').textContent = 'Processing YouTube video...';
+    } 
+    else if (url.includes('instagram.com')) {
+        document.getElementById('ig-icon').style.display = 'flex';
+        document.getElementById('loading-text').textContent = 'Processing Instagram video...';
+    }
+    else if (url.includes('facebook.com')) {
+        document.getElementById('fb-icon').style.display = 'flex';
+        document.getElementById('loading-text').textContent = 'Processing Facebook video...';
+    }
 });
 
-// Validate URL in real-time
-document.querySelector('.url-input').addEventListener('input', function(e) {
-    const urlPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
-    if (!urlPattern.test(e.target.value)) {
-        e.target.setCustomValidity('Please enter a valid YouTube URL');
-    } else {
-        e.target.setCustomValidity('');
-    }
+// Form submission
+document.getElementById('download-form').addEventListener('submit', function() {
+    document.getElementById('loading-indicator').style.display = 'flex';
 });
 </script>
 
@@ -123,7 +137,7 @@ document.querySelector('.url-input').addEventListener('input', function(e) {
 
 .input-group {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .url-input {
@@ -149,18 +163,20 @@ document.querySelector('.url-input').addEventListener('input', function(e) {
     background: #3367d6;
 }
 
-.quality-options {
+.platform-options {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 15px;
+    margin-top: 10px;
 }
 
-.quality-options label {
-    display: flex;
+.platform-icon {
+    display: none;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border-radius: 20px;
+    font-size: 14px;
 }
 
 .loading-indicator {
@@ -215,20 +231,42 @@ document.querySelector('.url-input').addEventListener('input', function(e) {
     border-radius: 8px;
 }
 
-.instructions ol {
-    padding-left: 20px;
-    margin: 15px 0;
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
 }
 
-.supported-platforms {
-    margin-top: 15px;
-    font-size: 14px;
+.platform-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.platform-card i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.platform-card h4 {
+    margin: 5px 0;
+}
+
+.platform-card p {
+    font-size: 0.8rem;
     color: #666;
 }
 
-.fas {
-    margin-right: 8px;
+.fab, .fas {
     color: #4285f4;
 }
+
+.fa-youtube { color: #ff0000; }
+.fa-instagram { color: #e1306c; }
+.fa-facebook { color: #1877f2; }
 </style>
 {% endblock %}
