@@ -4,11 +4,18 @@
 {% block title %}Download Facebook or Instagram Video - AllLinkDownloader{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container downloader-container">
   <h1 class="title">Facebook & Instagram Video Downloader</h1>
+
   <form method="POST" class="download-form">
-    <input type="text" name="url" placeholder="Paste your video URL here" required value="{{ request.form.url if request.method == 'POST' else '' }}">
-    <button type="submit">Download</button>
+    <input 
+      type="url" 
+      name="url" 
+      placeholder="Paste your video URL here (Facebook or Instagram)" 
+      required 
+      value="{{ request.form.url if request.method == 'POST' else '' }}"
+    >
+    <button type="submit" class="btn-primary">Get Video</button>
   </form>
 
   {% if error %}
@@ -17,9 +24,9 @@
 
   {% if video %}
     <div class="video-info">
-      <img src="{{ video.thumbnail }}" alt="Thumbnail">
+      <img src="{{ video.thumbnail }}" alt="Video Thumbnail" class="video-thumb">
       <h2>{{ video.title }}</h2>
-      <p>Duration: {{ video.duration }}</p>
+      <p><strong>Duration:</strong> {{ video.duration }}</p>
     </div>
 
     <!-- Fake Loading Popup -->
@@ -30,7 +37,7 @@
       </div>
     </div>
 
-    <!-- Real download buttons (hidden initially) -->
+    <!-- Real download buttons -->
     <div id="real-downloads" style="display: none;">
       {% for format in video.formats %}
         <a href="{{ format.url }}" class="download-btn" download>
@@ -39,12 +46,47 @@
       {% endfor %}
     </div>
 
-    <!-- Fake download button to trigger the delay -->
+    <!-- Fake button to trigger popup -->
     <button id="start-download" class="fake-download-btn">Download Video</button>
   {% endif %}
 </div>
 
+<!-- Page-specific styles (will also link with style.css) -->
 <style>
+  .downloader-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  .download-form input {
+    width: 70%;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .btn-primary {
+    padding: 10px 20px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .btn-primary:hover {
+    background: #45a049;
+  }
+  .video-info {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .video-thumb {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
   .loading-popup {
     display: none;
     position: fixed;
@@ -61,6 +103,7 @@
     padding: 30px;
     text-align: center;
     border-radius: 10px;
+    width: 250px;
   }
   .loader {
     border: 6px solid #f3f3f3;
@@ -85,6 +128,14 @@
     border-radius: 6px;
     font-weight: bold;
   }
+  .download-btn:hover, .fake-download-btn:hover {
+    background: #45a049;
+  }
+  .error {
+    color: red;
+    margin-top: 10px;
+    font-weight: bold;
+  }
 </style>
 
 <script>
@@ -101,7 +152,7 @@
         setTimeout(() => {
           popup.style.display = 'none';
           realLinks.style.display = 'block';
-        }, 6000); // 6 seconds delay
+        }, 6000); // Delay for loading effect
       });
     }
   });
