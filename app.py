@@ -45,38 +45,89 @@ def qr():
 def shortener():
     return render_template('tools/shortener.html')
 
+# ---------- REPLACE the downloader route in app.py with this ----------
 @app.route('/tools/downloader', methods=['GET', 'POST'])
 def downloader():
     if request.method == 'POST':
-        url = request.form['url']
+        url = request.form.get('url', '').strip()
+        if not url:
+            return render_template('tools/downloader.html', error="Please paste a video URL first.")
 
+        # Create per-request temp folder (safer for concurrency)
+        temp_dir = tempfile.mkdtemp(prefix="dl_")
         try:
+            # Basic output template inside temp dir
+            outtmpl = os.path.join(temp_dir, "%(title).50s.%(ext)s")
+
+            # Detect if ffmpeg is available in PATH
+            ffmpeg_available = shutil.which('ffmpeg') is not None
+
+            # Base options
             ydl_opts = {
+                'outtmpl': outtmpl,
+                'noplaylist': True,
                 'quiet': True,
-                'skip_download': False,
-                'outtmpl': 'temp_downloads/%(title).50s.%(ext)s',
-                'format': 'bestvideo+bestaudio/best',
-                'merge_output_format': 'mp4',
+                'no_warnings': True,
+                # If ffmpeg found, allow merging to mp4 for best quality
+                # else, try to prefer single-file mp4 if possible (no-merge fallback)
             }
 
+            if ffmpeg_available:
+                ydl_opts.update({
+                    'format': 'bestvideo+bestaudio/best',
+                    'merge_output_format': 'mp4',
+                })
+            else:
+                # no ffmpeg -> avoid requesting merge to prevent failure
+                # prefer mp4 if available, or best available
+                ydl_opts.update({
+                    'format': 'best[ext=mp4]/best',
+                })
+
+            # If there's a cookies file for Instagram, use it (optional)
+            # The project will look for cookies_instagram.txt at project root
+            cookies_path = os.path.join(os.getcwd(), "cookies_instagram.txt")
+            if os.path.isfile(cookies_path):
+                ydl_opts['cookiefile'] = cookies_path
+
+            # Run yt-dlp and download into temp_dir
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=True)
-                filename = ydl.prepare_filename(info)
-                title = info.get('title', 'video')
-                ext = info.get('ext', 'mp4')
 
-            safe_name = f"{secure_filename(title)}.{ext}"
+            # Prepare file path to send back
+            # If the extractor created multiple files, find the largest file in temp_dir
+            files = [os.path.join(temp_dir, f) for f in os.listdir(temp_dir)]
+            if not files:
+                raise Exception("No file was downloaded.")
 
-            return send_file(
-                filename,
-                as_attachment=True,
-                download_name=safe_name
-            )
+            # Choose the biggest file (likely the merged mp4)
+            files.sort(key=lambda x: os.path.getsize(x), reverse=True)
+            file_path = files[0]
+            filename = os.path.basename(file_path)
+
+            # Create safe download name and send the file
+            safe_download_name = secure_filename(filename)
+            return send_file(file_path, as_attachment=True, download_name=safe_download_name)
 
         except Exception as e:
-            return render_template('tools/downloader.html', error=f"Download failed: {str(e)}")
+            # Show a user-friendly error (but log the real one on server logs)
+            app.logger.exception("Downloader error")
+            msg = str(e)
+            # Provide clearer hints for common problems
+            if "cookiefile" in msg.lower():
+                hint = " (Instagram may require login cookies — see settings)"
+                msg = msg + hint
+            return render_template('tools/downloader.html', error=f"Download failed: {msg}")
+        finally:
+            # Clean up temp dir (delete files)
+            try:
+                shutil.rmtree(temp_dir)
+            except Exception:
+                pass
 
+    # GET request -> show form
     return render_template('tools/downloader.html')
+# ---------------------------------------------------------------------
 
 @app.route('/tools/calculator')
 def calculator():
